@@ -1,0 +1,55 @@
+let hero = document.querySelector('#hero');
+let dataFetch = async () => {
+    let response = await fetch('https://effective-mobile.duckdns.org/api/ads/')
+    hero.innerHTML = '';
+    let data = await response.json();
+    console.log(data);
+    getData(data.results);
+
+}
+dataFetch()
+
+    function getData(data) {
+    data.forEach((item,index) => {
+        let li = document.createElement('li');
+        li.style.height ="300px"
+        li.innerHTML = `<div class="bg-red-100 rounded-md p-4 cursor-pointer ">
+    <p class="hover:text-red-300 font-bold">
+    <span>${index+1}</span>
+    ${item.title}
+    </p>
+    <p class="hover:text-white font-normal">${item.description.length > 10 ? item.description.slice(0,10) + "" :item.description}</p>
+    <img class="w-[200px] rounded-lg mt-[20px]   h-[200px]" src="${item.image_url ? item.image_url :"./car.jpg" }" alt="${item.image_url}">
+    <div/>
+`
+
+        hero.append(li);
+    })
+    }
+
+    let form = document.querySelector('#form')
+    let title = document.querySelector('#title');
+    let description = document.querySelector('#description');
+    let image_url = document.querySelector('#image_url');
+    let category = document.querySelector('#category');
+    let condition = document.querySelector('#condition');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let postData = async ()=>{
+            let post = await fetch('https://effective-mobile.duckdns.org/api/ads/',{
+                method: 'POST',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    title: title.value,
+                    description: description.value,
+                    image_url: image_url.value,
+                    category: category.value,
+                    condition: condition.value,
+                })
+            })
+
+        }
+
+        postData()
+    })
