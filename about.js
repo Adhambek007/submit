@@ -19,7 +19,7 @@ dataFetch()
     ${item.title}
     </p>
     <p class="hover:text-white font-normal">${item.description.length > 10 ? item.description.slice(0,10) + "" :item.description}</p>
-    <img class="w-[200px] rounded-lg mt-[20px]   h-[200px]" src="${item.image_url ? item.image_url :"./car.jpg" }" alt="${item.image_url}">
+    <img class="w-[200px] rounded-lg mt-[20px]   h-[200px]" src="${item.image_url ? item.image_url:"./car.jpg"}" alt="${item.image_url}">
     <div/>
 `
 
@@ -48,8 +48,15 @@ dataFetch()
                     condition: condition.value,
                 })
             })
+            if (post.ok){
+                console.log('success');
+                dataFetch()
+
+
+            }
 
         }
 
         postData()
+
     })
